@@ -9,4 +9,11 @@ const getBookDetails = (firebaseKey) => new Promise((resolve, reject) => {
   }).catch(reject);
 });
 
-export default getBookDetails;
+const getAuthorDetails = (firebaseKey) => new Promise((resolve, reject) => {
+  getSingleAuthor(firebaseKey).then((authorObject) => {
+    getSingleBook(authorObject.firebaseKey)
+      .then((bookObject) => resolve({ ...authorObject, bookObject }));
+  }).catch(reject);
+});
+
+export { getBookDetails, getAuthorDetails };
